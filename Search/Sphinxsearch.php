@@ -3,11 +3,9 @@
 namespace IAkumaI\SphinxsearchBundle\Search;
 
 use SphinxClient;
-
 use IAkumaI\SphinxsearchBundle\Exception\EmptyIndexException;
 use IAkumaI\SphinxsearchBundle\Exception\NoSphinxAPIException;
 use IAkumaI\SphinxsearchBundle\Doctrine\BridgeInterface;
-
 
 /**
  * Sphinx search engine
@@ -17,7 +15,6 @@ use IAkumaI\SphinxsearchBundle\Doctrine\BridgeInterface;
  * @method bool IsConnectError()
  * @method null SetServer ( $host, $port = 0 )
  * @method null SetConnectTimeout ( $timeout )
- *
  * @method null SetLimits ( $offset, $limit, $max=0, $cutoff=0 )
  * @method null setMaxQueryTime ( $max )
  * @method null SetMatchMode ( $mode )
@@ -35,35 +32,32 @@ use IAkumaI\SphinxsearchBundle\Doctrine\BridgeInterface;
  * @method null SetArrayResult ( $arrayresult )
  * @method null SetOverride ( $attrname, $attrtype, $values )
  * @method null SetSelect ( $select )
- *
  * @method null ResetFilters ()
  * @method null ResetGroupBy ()
  * @method null ResetOverrides ()
- *
  * @method bool|array BuildExcerpts ( $docs, $index, $words, $opts=array() )
  * @method bool|array BuildKeywords ( $query, $index, $hits )
- *
  * @method array Status ()
  */
 class Sphinxsearch
 {
     /**
-     * @var string $host
+     * @var string
      */
     protected $host;
 
     /**
-     * @var string $port
+     * @var string
      */
     protected $port;
 
     /**
-     * @var string $socket
+     * @var string
      */
     protected $socket;
 
     /**
-     * @var SphinxClient $sphinx
+     * @var SphinxClient
      */
     protected $sphinx;
 
@@ -75,8 +69,8 @@ class Sphinxsearch
     /**
      * Constructor
      *
-     * @param string $host Sphinx host
-     * @param string $port Sphinx port
+     * @param string $host   Sphinx host
+     * @param string $port   Sphinx port
      * @param string $socket UNIX socket. Not required
      *
      * @throws NoSphinxAPIException If class SphinxClient does not exists
@@ -130,14 +124,15 @@ class Sphinxsearch
 
     /**
      * Search for a query string
-     * @param  string  $query   Search query
-     * @param  array   $indexes Index list to perform the search
-     * @param  boolean $escape  Should the query to be escaped?
      *
-     * @return array           Search results
+     * @param string $query   Search query
+     * @param array  $indexes Index list to perform the search
+     * @param bool   $escape  Should the query to be escaped?
+     *
+     * @return array Search results
      *
      * @throws EmptyIndexException If $indexes is empty
-     * @throws \RuntimeException If seaarch failed
+     * @throws \RuntimeException   If seaarch failed
      */
     public function search($query, array $indexes, $escape = true)
     {
@@ -170,14 +165,15 @@ class Sphinxsearch
 
     /**
      * Search for a query string and convert results to entities
-     * @param  string  $query   Search query
-     * @param  string|array   $index Index name(s) for search
-     * @param  boolean $escape  Should the query to be escaped?
      *
-     * @return array           Search results
+     * @param string       $query  Search query
+     * @param string|array $index  Index name(s) for search
+     * @param bool         $escape Should the query to be escaped?
+     *
+     * @return array Search results
      *
      * @throws \InvalidArgumentException If $index is not valid
-     * @throws \LogicException If bridge was not set
+     * @throws \LogicException           If bridge was not set
      */
     public function searchEx($query, $index, $escape = true)
     {
@@ -205,8 +201,8 @@ class Sphinxsearch
     /**
      * Adds a query to a multi-query batch
      *
-     * @param string $query Search query
-     * @param array $indexes Index list to perform the search
+     * @param string $query   Search query
+     * @param array  $indexes Index list to perform the search
      *
      * @throws EmptyIndexException If $indexes is empty
      */
@@ -224,25 +220,25 @@ class Sphinxsearch
      * If set only one date it also works
      * If not one date is set method do nothing
      *
-     * @param string $attr Timestamp attr
+     * @param string    $attr      Timestamp attr
      * @param \DateTime $datestart Date to start filter
      * @param \DateTime $dateend   Date to end filter
      */
     public function setFilterBetweenDates($attr, \DateTime $datestart = null, \DateTime $dateend = null)
     {
         if ($datestart && $dateend) {
-            $tsStart = (int)$datestart->format('U');
-            $tsEnd = (int)$dateend->format('U');
+            $tsStart = (int) $datestart->format('U');
+            $tsEnd = (int) $dateend->format('U');
 
             $this->getClient()->setFilterRange($attr, $tsStart, $tsEnd);
         } elseif ($datestart) {
-            $tsStart = (int)$datestart->format('U');
+            $tsStart = (int) $datestart->format('U');
             $tsEnd = PHP_INT_MAX;
 
             $this->getClient()->setFilterRange($attr, $tsStart, $tsEnd);
         } elseif ($dateend) {
             $tsStart = 0;
-            $tsEnd = (int)$dateend->format('U');
+            $tsEnd = (int) $dateend->format('U');
 
             $this->getClient()->setFilterRange($attr, $tsStart, $tsEnd);
         }
@@ -264,6 +260,7 @@ class Sphinxsearch
 
     /**
      * Get Sphinx client
+     *
      * @return SphinxClient
      */
     public function getClient()

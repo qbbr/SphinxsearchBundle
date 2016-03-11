@@ -1,10 +1,9 @@
 <?php
+
 namespace IAkumaI\SphinxsearchBundle\Pagerfanta\Adapter;
 
 /**
  * Pagerfanta pagination adapter for SphinxSearch
- *
- * @package IAkumaI\SphinxsearchBundle\Pagerfanta\Adapter
  */
 class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
 {
@@ -22,9 +21,9 @@ class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
 
     /**
      * @param \IAkumaI\SphinxsearchBundle\Search\Sphinxsearch $sphinx
-     * @param string $query query string
-     * @param string|array $entityIndex Index index_name attribute from config.yml
-     * @param array $options misc options
+     * @param string                                          $query       query string
+     * @param string|array                                    $entityIndex Index index_name attribute from config.yml
+     * @param array                                           $options     misc options
      */
     public function __construct(
         \IAkumaI\SphinxsearchBundle\Search\Sphinxsearch $sphinx,
@@ -45,12 +44,12 @@ class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
     /**
      * Returns an slice of the results.
      *
-     * @param integer $offset The offset.
-     * @param integer $length The length.
+     * @param int $offset The offset.
+     * @param int $length The length.
      *
      * @return array|\Traversable The slice.
      */
-    function getSlice($offset, $length)
+    public function getSlice($offset, $length)
     {
         $this->sphinx->SetLimits($offset, $length, $this->options['max_results']);
         $this->results = $this->sphinx->searchEx($this->query, $this->options['entity']);
@@ -70,9 +69,9 @@ class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
     /**
      * Returns the number of results.
      *
-     * @return integer The number of results.
+     * @return int The number of results.
      */
-    function getNbResults()
+    public function getNbResults()
     {
         $this->sphinx->SetLimits(1, 1, $this->options['max_results']);
         $results = $this->sphinx->searchEx($this->query, $this->options['entity']);
@@ -89,5 +88,4 @@ class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
     {
         return $this->results;
     }
-
 }

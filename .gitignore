@@ -216,3 +216,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# PHP-CS-Fixes cache
+.php_cs.cache

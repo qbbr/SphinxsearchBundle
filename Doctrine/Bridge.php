@@ -5,7 +5,6 @@ namespace IAkumaI\SphinxsearchBundle\Doctrine;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\EntityManager;
 
-
 /**
  * Bridge to find entities for search results
  */
@@ -13,6 +12,7 @@ class Bridge implements BridgeInterface
 {
     /**
      * Symfony2 container
+     *
      * @var Container
      */
     protected $container;
@@ -24,6 +24,7 @@ class Bridge implements BridgeInterface
 
     /**
      * EntityManager name
+     *
      * @var string
      */
     protected $emName;
@@ -40,9 +41,9 @@ class Bridge implements BridgeInterface
     /**
      * Constructor
      *
-     * @param Container $container Symfony2 DI-container
-     * @param string[optional] $emName EntityManager name
-     * @param array[optional] $indexes List of search indexes with entity names
+     * @param Container        $container Symfony2 DI-container
+     * @param string[optional] $emName    EntityManager name
+     * @param array[optional]  $indexes   List of search indexes with entity names
      */
     public function __construct(Container $container, $emName = 'default', $indexes = array())
     {
@@ -53,6 +54,7 @@ class Bridge implements BridgeInterface
 
     /**
      * Get an EntityManager
+     *
      * @return EntityManager
      */
     public function getEntityManager()
@@ -92,12 +94,13 @@ class Bridge implements BridgeInterface
 
     /**
      * Add entity list to sphinx search results
-     * @param  array  $results Sphinx search results
-     * @param  string|array $index   Index name(s)
+     *
+     * @param array        $results Sphinx search results
+     * @param string|array $index   Index name(s)
      *
      * @return array
      *
-     * @throws LogicException If results come with error
+     * @throws LogicException           If results come with error
      * @throws InvalidArgumentException If index name is not valid
      */
     public function parseResults(array $results, $index)
